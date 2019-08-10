@@ -1,0 +1,5 @@
+Difficulties in the code:
+
+1. making the model and dealing with google automl not loading in
+2. discussion of framework
+3. more...

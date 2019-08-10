@@ -1,0 +1,6 @@
+key features of the app:
+
+1. camera clips onto dementia patient
+2. info gets sent to a web server where it is processed and marked
+3. marked instances (such as detection of medication or glasses) are sent as links to an app for easy access
+4. can access this info thru app account - safe and private

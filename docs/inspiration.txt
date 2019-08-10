@@ -1,0 +1,3 @@
+What inspired me to create this project
+
+I became very interested in machine learning and computer vision when i first heard of it, watching videos about it and eager to make a model. Then, I later heard from my parents that some of our close friends were starting to suffer from the early stages of alzheimers. Eager to help, I decided to use my in machine learning and coding to develop a app for not only my family friends, but also dementia patients worldwide.

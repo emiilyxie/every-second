@@ -1,0 +1,11 @@
+The purpose of this app is to:
+
+1. act as a digital memory for alzheimer's patients and caregivers
+2. record/track objects such as pills and glasses
+3. allow the patient and caregiver to easily access this info 
+4. make a time lapse of the day
+5. increase the independence of alz patients
+6. make sure the alz patient is sticking to habits and prevent misplacement
+7. help the alz patient remember where things are
+
+[App Name] acts as a digital memory for alzheimer's patients and caregivers by tracking daily activities and indexing them for the patients and cargivers to see, increasing the independence of alzheimer's patients. 
