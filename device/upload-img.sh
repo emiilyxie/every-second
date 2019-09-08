@@ -15,12 +15,14 @@ do
         if [[ "$OLDEST" == *".jpg"* ]]
         then
             echo "uploading to cloud"
-            gsutil cp $OLDEST gs://my-first-bucket-yay123456
+            gsutil cp $OLDEST gs://my-first-bucket-yay123456/raspi-testing/
             if [ $(echo $?) == 0 ]
             then
                 echo "removing file $OLDEST"
                 rm $OLDEST
             fi
+        else
+            sleep 5s
         fi
     fi
 done
