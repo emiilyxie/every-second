@@ -1,8 +1,9 @@
 import sys
+import json
 from google.cloud import storage
-from google.appengine.api import app_identity
 from google.cloud import automl_v1beta1
 from google.cloud.automl_v1beta1.proto import service_pb2
+
 
 def prediction(data, context):
     """Background Cloud Function to be triggered by Cloud Storage.
@@ -22,16 +23,22 @@ def prediction(data, context):
     print('Metageneration: {}'.format(data['metageneration']))
     print('Created: {}'.format(data['timeCreated']))
     print('Updated: {}'.format(data['updated']))
-    
+
     prediction_client = automl_v1beta1.PredictionServiceClient()
     name = 'projects/{}/locations/us-central1/models/{}'.format('377104581238', 'IOD2191836847552856064')
     imagepath = data['bucket'] + "/" + data['name']
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(data['bucket'])
     blob = bucket.blob(data['name'])
-    
-    payload = {'image': {'image_bytes': blob }}
+    content = blob.download_as_string()
+
+    payload = {'image': {'image_bytes': content}}
+    # print(content)
     params = {}
-    request = prediction_client.predict(name, payload, params)
-    return request
-    print(request) # waits till request is returned
+    response = prediction_client.predict(name, payload, params)
+    # print(response)
+    for result in response.payload:
+        print("Display Name: {}".format(result.display_name))
+        print("Bounding Box: {}".format(result.image_object_detection.bounding_box))
+        print("Score: {}".format(result.image_object_detection.score))
+        # return response # waits till request is returned
