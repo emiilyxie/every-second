@@ -60,5 +60,10 @@ typings/
 # next.js build output
 .next
 
-
+# exclude testing images
 test-imgs
+
+# exclude virtualenv sys files
+bin/
+include/
+lib/
