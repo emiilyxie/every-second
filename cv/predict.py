@@ -1,5 +1,5 @@
 import sys
-
+import json
 from google.cloud import automl_v1beta1
 from google.cloud.automl_v1beta1.proto import service_pb2
 
@@ -12,7 +12,11 @@ def get_prediction(content, project_id, model_id):
   payload = {'image': {'image_bytes': content }}
   params = {}
   request = prediction_client.predict(name, payload, params)
-  return request  # waits till request is returned
+  for result in request.payload:
+    print("Display Name: {}".format(result.display_name))
+    print("Bounding Box: {}".format(result.image_object_detection.bounding_box))
+    print("Score: {}".format(result.image_object_detection.score))
+  #return request  # waits till request is returned
 
 if __name__ == '__main__':
   file_path = sys.argv[1]
