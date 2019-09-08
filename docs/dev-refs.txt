@@ -1,0 +1,5 @@
+Example using Cloud Function with Datastore
+https://medium.com/@chriswrite/cloud-function-and-datastore-tutorial-intro-to-build-a-server-less-service-92bc106ef8e5
+
+Cloud Function to work with Cloud storage
+https://medium.com/@timhberry/getting-started-with-python-for-google-cloud-functions-646a8cddbb33
