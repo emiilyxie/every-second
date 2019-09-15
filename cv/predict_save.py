@@ -33,16 +33,9 @@ def prediction(data, context):
 
     payload = {'image': {'image_bytes': content}}
     # print(content)
-    """
+
     params = {}
     response = prediction_client.predict(name, payload, params)
-    # print(response)
-    for result in response.payload:
-        print("Display Name: {}".format(result.display_name))
-        print("Bounding Box: {}".format(result.image_object_detection.bounding_box))
-        print("Score: {}".format(result.image_object_detection.score))
-        # return response # waits till request is returned
-    """
 
     record = {}
     file_path = data['name']
@@ -50,9 +43,21 @@ def prediction(data, context):
     record['userID'] = path_parts[0]
     record['deviceID'] = path_parts[1]
     record['timestamp'] = path_parts[2][:-4]
-    record['gcsPath'] = data['bucket'] + '/' + data['name']
-    """record['labels'] = result.display_name"""
-    record['labels'] = 'pillBottle'
+    record['gcsPath'] = "gs://" + data['bucket'] + '/' + data['name']
+    record['box'] = ""
+    record['score'] = 0.0
+    record['pill_bottle'] = False
+
+    # print(response)
+    for result in response.payload:
+        print("Display Name: {}".format(result.display_name))
+        print("Bounding Box: {}".format(result.image_object_detection.bounding_box))
+        print("Score: {}".format(result.image_object_detection.score))
+        record['box'] = "{}".format(result.image_object_detection.bounding_box)
+        record['score'] = result.image_object_detection.score
+        if ('pill_bottle' in result.display_name):
+            record['pill_bottle'] = True
+        # return response # waits till request is returned
 
     save_to_store(record)
 
@@ -78,7 +83,9 @@ def save_to_store(record):
         "deviceID": record['deviceID'],
         "timestamp": record['timestamp'],
         "gcsPath": record['gcsPath'],
-		"labels": record['labels']
+        "pill_bottle": record['pill_bottle'],
+        "box": record['box'],
+        "score": record['score']
     })
     """print("new entity:" + entity)"""
     client.put(entity)
