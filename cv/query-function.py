@@ -31,9 +31,15 @@ def query(request):
     if people != '':
         query.add_filter('people', '=', people)
     results = query.fetch()
+    hashmap = {}
     for result in results:
         print(result)
         print(result['gcsPath'])
+        ts = result['timestamp']
+        key = str(int(int(ts) / 100))
+        hashmap[key] = 1 
+
+    print(hashmap)
 
 def filter_request(request,request_info):
     request_json = request.get_json(silent=True)
