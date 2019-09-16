@@ -7,5 +7,11 @@ https://medium.com/@timhberry/getting-started-with-python-for-google-cloud-funct
 Cloud function Python to access Datastore
 https://stackoverflow.com/questions/52078058/cloud-functions-python-to-access-datastore
 
-Python client for GC Datastore 
+Python client for GC Datastore
 https://googleapis.github.io/google-cloud-python/latest/datastore/index.html
+
+Domain-named bucket verification
+https://cloud.google.com/storage/docs/domain-name-verification#verification
+Static website example
+https://cloud.google.com/storage/docs/hosting-static-website
+https://cloud.google.com/storage/docs/static-website
