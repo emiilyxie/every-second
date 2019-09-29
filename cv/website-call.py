@@ -16,7 +16,7 @@ def query(request):
         # header and caches preflight response for an 3600s
         headers = {
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Methods': 'GET,POST',
             'Access-Control-Allow-Headers': 'Content-Type',
             'Access-Control-Max-Age': '3600'
         }
@@ -52,11 +52,16 @@ def query(request):
         query.add_filter('people', '=', people)
     results = query.fetch()
 
+    img_paths = []
+
     for result in results:
         print(result)
-        print(result['gcsPath'])
+        img_path = result['gcsPath']
+        img_paths.append(img_path)
+        print(img_path)
 
-    return ('Hello World!', 200, headers)
+    '''return (tuple(img_paths), 200, headers)'''
+    return (",".join(img_paths), 200, headers)
 
 def filter_request(request,request_info):
     request_json = request.get_json(silent=True)
