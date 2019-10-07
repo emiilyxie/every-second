@@ -54,9 +54,8 @@ def query(request):
         query.add_filter('people', '=', people)
     results = query.fetch()
 
-    hashmap = {}
-    newhashmap = {}
-    rangehashmap = {}
+    hmCountInMinute = {}
+    hmImagesInMinute = {}
     rangeThreshold = 10
 
     for result in results:
@@ -64,32 +63,22 @@ def query(request):
         print(result['gcsPath'])
         ts = result['timestamp']
         key = str(int(int(ts) / 100))
-        if(key in hashmap):
-            hashmap[key] += 1
+        if(key in hmCountInMinute):
+            hmCountInMinute[key] += 1
+            hmImagesInMinute[key].append(result['gcsPath'])
         else:
-            hashmap[key] = 1
-    '''
-    for result in hashmap:
-        key = str(int(int(result) / 100))
-        if(newhashmap.get(key) >= 1):
-            newhashmap[key] += 1
-        else:
-            newhashmap[key] = 1
-    '''
-    '''
-    hashmaplist = list(newhashmap.keys())
-    for result in hashmaplist:
-        if(hashmaplist[result+1] - hashmaplist[result] < rangeThreshold):
-    '''
-    print(hashmap)
-    orderedKeys = sorted(hashmap)
+            hmCountInMinute[key] = 1
+            hmImagesInMinute[key] = []
+
+    print(hmCountInMinute)
+    orderedKeys = sorted(hmCountInMinute)
     print(orderedKeys)
     ranges, rangeIndexes = determine_range(orderedKeys)
     print(ranges)
-    json_data = construct_json(pillBottle, food, people, ranges, rangeIndexes, orderedKeys, hashmap)
+    json_data = construct_json(pillBottle, food, people, ranges, rangeIndexes, orderedKeys, hmCountInMinute, hmImagesInMinute)
     return (json_data, 200, headers)
 
-def construct_json(pillBottle, food, people, ranges, rangeIndexes, orderedKeys, hashmap):
+def construct_json(pillBottle, food, people, ranges, rangeIndexes, orderedKeys, hmCountInMinute, hmImagesInMinute):
     headers = {
         'Access-Control-Allow-Origin': '*'
     }
@@ -97,38 +86,48 @@ def construct_json(pillBottle, food, people, ranges, rangeIndexes, orderedKeys, 
     eventName = ''
     data['eventCount'] = len(ranges)
     if(pillBottle != ''):
-        eventName = pillBottle
+        eventName = "medicine"
     if(food != ''):
-        eventName = food
+        eventName = "food"
     if(people != ''):
-        eventName = people
+        eventName = "people"
     data['eventName'] = eventName
     data['eventMode'] = "today"
     data["events"] = []
+
     index = 0
     for range in ranges:
         event = {}
         event['eventStart'] = range[0]
         event['eventEnd'] = range[1]
         event['videopath'] = 'gs://bucket.everysecond.live/customer/1001/query/video-' + eventName + event['eventStart'] + '.mp4'
-        event['imagePaths'] = getImagePaths(rangeIndexes[index], orderedKeys, hashmap)
+        '''generateVideo(event['videopath'], rangeIndexes[index], orderedKeys, hmCountInMinute)'''
+        event['imagePaths'] = getImagePaths(rangeIndexes[index], orderedKeys, hmCountInMinute, hmImagesInMinute)
         data['events'].append(event)
         index += 1
     json_data = json.dumps(data)
     return json_data
 
-def getImagePaths(rangeIndex, orderedKeys, hashmap):
-    side = rangeIndex[1] - rangeIndex[0]
-    step = side / 6
+def getImagePaths(rangeIndex, orderedKeys, hmCountInMinute, hmImagesInMinute):
+    size = rangeIndex[1] - rangeIndex[0]
+    step = size / 6
     paths = []
-    for i in range(0, 5):
-        tempIndex = int(rangeIndex[0] + i*step)
-        if(tempIndex < rangeIndex[1]):
-            key = orderedKeys[tempIndex]
-            path = hashmap[key]
-            paths.append(path)
+    selectedPaths = []
 
-    return paths
+    for index in range(rangeIndex[0], rangeIndex[1]):
+        key = orderedKeys[index]
+        paths.append(hmImagesInMinute[key])
+
+    if len(paths) > 6:
+        size = len(paths)
+        step = size / 6
+        for i in range(0, 5):
+            tempIndex = int(i*step)
+            selectedPaths.append(paths[tempIndex])
+    else:
+        selectedPaths = paths
+
+    return selectedPaths
 
 
 def filter_request(request,request_info):
