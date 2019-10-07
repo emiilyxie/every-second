@@ -47,6 +47,8 @@ def prediction(data, context):
     record['box'] = ""
     record['score'] = 0.0
     record['pill_bottle'] = False
+    record['food'] = False
+    record['people'] = False
 
     # print(response)
     for result in response.payload:
@@ -55,8 +57,13 @@ def prediction(data, context):
         print("Score: {}".format(result.image_object_detection.score))
         record['box'] = "{}".format(result.image_object_detection.bounding_box)
         record['score'] = result.image_object_detection.score
+
         if ('pill_bottle' in result.display_name):
             record['pill_bottle'] = True
+        if ('food' in result.display_name):
+            record['food'] = True
+        if ('people' in result.display_name):
+            record['people'] = True
         # return response # waits till request is returned
 
     save_to_store(record)
@@ -73,19 +80,26 @@ def save_to_store(record):
     client = datastore.Client()
     incomplete_key = client.key("every-snap")
 
-    entity = datastore.Entity(key=incomplete_key)
+    ''' to save Datastore index size, exclude some properties'''
+    entity = datastore.Entity(
+                key=incomplete_key,
+                exclude_from_indexes=['gcsPath','box','score'])
+
     """print("key: " + incomplete_key)"""
     """print("entity: " + entity)"""
-
+    ''' need composite index for future query on multiple filters and order'''
 
     entity.update({
    	    "userID": record['userID'],
         "deviceID": record['deviceID'],
         "timestamp": record['timestamp'],
-        "gcsPath": record['gcsPath'],
         "pill_bottle": record['pill_bottle'],
+        "food": record['food'],
+        "people": record['people'],
+        "gcsPath": record['gcsPath'],
         "box": record['box'],
         "score": record['score']
     })
+
     """print("new entity:" + entity)"""
     client.put(entity)

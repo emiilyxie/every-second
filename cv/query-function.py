@@ -41,17 +41,45 @@ def query(request):
     client = datastore.Client()
 
     query = client.query(kind='every-snap')
-    '''query.add_filter('timestamp', '>', 20190908150000)'''
+
+    '''query.projection = ['timestamp', 'gcsPath']'''
+    '''query.add_filter('timestamp', '>', '20190908150000')'''
+
     query.add_filter('userID', '=', userID)
     if pillBottle != '':
-        pill = False
+        bPill = False
         if( pillBottle == "True"):
-            pill = True
-        query.add_filter('pill_bottle', '=', pill)
+            bPill = True
+        query.add_filter('pill_bottle', '=', bPill)
+
     if food != '':
-        query.add_filter('food', '=', food)
+        bFood = False
+        if( food == "True"):
+            bFood = True
+        query.add_filter('food', '=', bFood)
+
     if people != '':
-        query.add_filter('people', '=', people)
+        bPeople = False
+        if( people == "True"):
+            bPeople = True
+        query.add_filter('people', '=', bPeople)
+
+    '''query.order = ['timestamp']'''
+
+    ''' reference: https://cloud.google.com/datastore/docs/tools/indexconfig
+    recommended index is:
+        indexes:
+
+        - kind: every-snap
+        properties:
+            - name: pill_bottle
+            - name: food
+            - name: people
+            - name: userID
+            - name: timestamp
+              direction: asc              
+    '''
+
     results = query.fetch()
 
     hmCountInMinute = {}
@@ -65,14 +93,20 @@ def query(request):
         key = str(int(int(ts) / 100))
         if(key in hmCountInMinute):
             hmCountInMinute[key] += 1
-            hmImagesInMinute[key].append(result['gcsPath'])
         else:
             hmCountInMinute[key] = 1
-            hmImagesInMinute[key] = []
 
+        if(key in hmImagesInMinute):
+            hmImagesInMinute[key].append(result['gcsPath'])
+        else:
+            hmImagesInMinute[key] = [result['gcsPath']]
+
+    print(hmImagesInMinute)
     print(hmCountInMinute)
+
     orderedKeys = sorted(hmCountInMinute)
     print(orderedKeys)
+
     ranges, rangeIndexes = determine_range(orderedKeys)
     print(ranges)
     json_data = construct_json(pillBottle, food, people, ranges, rangeIndexes, orderedKeys, hmCountInMinute, hmImagesInMinute)
@@ -116,7 +150,7 @@ def getImagePaths(rangeIndex, orderedKeys, hmCountInMinute, hmImagesInMinute):
 
     for index in range(rangeIndex[0], rangeIndex[1]):
         key = orderedKeys[index]
-        paths.append(hmImagesInMinute[key])
+        paths.extend(hmImagesInMinute[key])
 
     if len(paths) > 6:
         size = len(paths)
@@ -155,13 +189,12 @@ def determine_range(orderedKeys):
     count = 0
     GAP = 10
     for key in orderedKeys:
-        count += 1
         if(starting == ""):
             starting = key
             startingIndex = count
             ending = key
         else:
-            if(distance(key, lastKey)> GAP):
+            if(distance(key, lastKey) > GAP):
                 ending = lastKey
                 endingIndex = count
                 range = [starting, ending]
@@ -172,14 +205,16 @@ def determine_range(orderedKeys):
                 starting = key
                 startingIndex = count
 
-            if(count >= len(orderedKeys)):
-                ending = key
-                range = [starting, ending]
-                rangeIndex = [startingIndex, count]
-                rangeIndexes.append(rangeIndex)
-                ranges.append(range)
-                print('Ending ' + str(range))
-
         lastKey = key
+        count += 1
+
+        if(count >= len(orderedKeys)):
+            ending = key
+            range = [starting, ending]
+            rangeIndex = [startingIndex, count]
+            rangeIndexes.append(rangeIndex)
+            ranges.append(range)
+            print('Ending ' + str(range))
+
         ''' look at next key '''
     return ranges, rangeIndexes
