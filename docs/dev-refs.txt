@@ -15,3 +15,6 @@ https://cloud.google.com/storage/docs/domain-name-verification#verification
 Static website example
 https://cloud.google.com/storage/docs/hosting-static-website
 https://cloud.google.com/storage/docs/static-website
+
+Handle CORS in code
+https://stackoverflow.com/questions/42140247/access-control-allow-origin-not-working-google-cloud-functions-gcf
