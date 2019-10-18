@@ -1,3 +1,21 @@
 img {
     max-width: 640px;
 }
+
+.carousel-inner > .item > img,
+ .carousel-inner > .item > a > img {
+     width: 100%;
+     margin: auto;
+ }
+.container {width: 980px !important;}
+
+#response-section {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.carousel {
+    max-width: 480px;
+    display: inline-block;
+}
