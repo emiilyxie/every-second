@@ -24,20 +24,20 @@ $("#pill-bottle-button").click(function() {
 });
 
 $("#food-button").click(function() {
-    $.get("https://us-central1-united-time-251622.cloudfunctions.net/query-function?userID=customer0001&pill_bottle=True",
+    $.get("https://us-central1-united-time-251622.cloudfunctions.net/query-function?userID=customer0001&food=True",
     function(data, status) {
         console.log("Data: " + data);
         console.log("Status: " + status);
-        displayImgs(data);
+        parseResponse(data);
     });
 });
 
 $("#people-button").click(function() {
-    $.get("https://us-central1-united-time-251622.cloudfunctions.net/website-call?userID=customer0001&pill_bottle=True",
+    $.get("https://us-central1-united-time-251622.cloudfunctions.net/query-function?userID=customer0001&people=True",
     function(data, status) {
         console.log("Data: " + data);
         console.log("Status: " + status);
-        displayImgs(data);
+        parseResponse(data);
     });
 });
 
@@ -130,9 +130,11 @@ var parseResponse = function(response) {
         //console.log("video path: " + respJson.events[i].videopath);
         let imgs = respJson.events[i].imagePaths;
         displayImgs(imgs,i);
+        /**
         var vidLink = document.createElement('p');
         vidLink.innerHTML = "Video Link: " + respJson.events[i].videopath;
         respSect.append(vidLink);
+        **/
     }
 }
 

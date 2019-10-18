@@ -1,6 +1,7 @@
 #!/bin/bash
 
 UPLOAD_FOLDER="/home/pi/everysecond/upload"
+TARGET_FOLDER="gs://bucket.everysecond.live/customer0001/rpi0001/"
 
 while :
 do
@@ -15,7 +16,7 @@ do
         if [[ "$OLDEST" == *".jpg"* ]]
         then
             echo "uploading to cloud"
-            gsutil cp $OLDEST gs://my-first-bucket-yay123456/raspi-testing/
+            gsutil cp $OLDEST $TARGET_FOLDER 
             if [ $(echo $?) == 0 ]
             then
                 echo "removing file $OLDEST"

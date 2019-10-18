@@ -6,14 +6,17 @@ from google.cloud import automl_v1beta1
 
 def prediction(data, context):
     """Background Cloud Function to be triggered by Cloud Storage.
-       This generic function logs relevant data when a file is changed.
+       This function processes an uploaded image in the cloud storage.
 
     Args:
         data (dict): The Cloud Functions event payload.
         context (google.cloud.functions.Context): Metadata of triggering event.
     Returns:
-        None; the output is written to Stackdriver Logging
+        None; the output is passed to save_to_store function
     """
+
+    PROJECT_NUMBER = '377104581238'
+    MODEL_NUMBER = 'IOD2191836847552856064'
 
     print('Event ID: {}'.format(context.event_id))
     print('Event type: {}'.format(context.event_type))
@@ -24,7 +27,7 @@ def prediction(data, context):
     print('Updated: {}'.format(data['updated']))
 
     prediction_client = automl_v1beta1.PredictionServiceClient()
-    name = 'projects/{}/locations/us-central1/models/{}'.format('377104581238', 'IOD2191836847552856064')
+    name = 'projects/{}/locations/us-central1/models/{}'.format(PROJECT_NUMBER, MODEL_NUMBER)
     imagepath = data['bucket'] + "/" + data['name']
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(data['bucket'])
@@ -52,9 +55,11 @@ def prediction(data, context):
 
     # print(response)
     for result in response.payload:
+        '''
         print("Display Name: {}".format(result.display_name))
         print("Bounding Box: {}".format(result.image_object_detection.bounding_box))
         print("Score: {}".format(result.image_object_detection.score))
+        '''
         record['box'] = "{}".format(result.image_object_detection.bounding_box)
         record['score'] = result.image_object_detection.score
 
@@ -62,23 +67,23 @@ def prediction(data, context):
             record['pill_bottle'] = True
         if ('food' in result.display_name):
             record['food'] = True
-        if ('people' in result.display_name):
+        if ('person' in result.display_name):
             record['people'] = True
         # return response # waits till request is returned
 
     save_to_store(record)
 
 def save_to_store(record):
-    """Responds to any HTTP request.
+    """Save record into datastore
     Args:
-        request (flask.Request): HTTP request object.
+        record: holds all the processed information of an image
     Returns:
-        The response text or any set of values that can be turned into a
-        Response object using
-        `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
+        none
     """
+    DATASTORE_KIND = 'event-snap'
+
     client = datastore.Client()
-    incomplete_key = client.key("every-snap")
+    incomplete_key = client.key(DATASTORE_KIND)
 
     ''' to save Datastore index size, exclude some properties'''
     entity = datastore.Entity(

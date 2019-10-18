@@ -40,7 +40,7 @@ def query(request):
 
     client = datastore.Client()
 
-    query = client.query(kind='every-snap')
+    query = client.query(kind='event-snap')
 
     '''query.projection = ['timestamp', 'gcsPath']'''
     '''query.add_filter('timestamp', '>', '20190908150000')'''
@@ -64,7 +64,7 @@ def query(request):
             bPeople = True
         query.add_filter('people', '=', bPeople)
 
-    '''query.order = ['timestamp']'''
+    query.order = ['timestamp']
 
     ''' reference: https://cloud.google.com/datastore/docs/tools/indexconfig
     recommended index is:
@@ -77,7 +77,7 @@ def query(request):
             - name: people
             - name: userID
             - name: timestamp
-              direction: asc              
+              direction: asc
     '''
 
     results = query.fetch()
@@ -143,8 +143,9 @@ def construct_json(pillBottle, food, people, ranges, rangeIndexes, orderedKeys, 
     return json_data
 
 def getImagePaths(rangeIndex, orderedKeys, hmCountInMinute, hmImagesInMinute):
+    NUMBER_OF_IMAGES_TO_SHOW = 10
     size = rangeIndex[1] - rangeIndex[0]
-    step = size / 6
+    step = size / NUMBER_OF_IMAGES_TO_SHOW
     paths = []
     selectedPaths = []
 
@@ -152,10 +153,10 @@ def getImagePaths(rangeIndex, orderedKeys, hmCountInMinute, hmImagesInMinute):
         key = orderedKeys[index]
         paths.extend(hmImagesInMinute[key])
 
-    if len(paths) > 6:
+    if len(paths) > NUMBER_OF_IMAGES_TO_SHOW:
         size = len(paths)
-        step = size / 6
-        for i in range(0, 5):
+        step = size / NUMBER_OF_IMAGES_TO_SHOW
+        for i in range(0, NUMBER_OF_IMAGES_TO_SHOW-1):
             tempIndex = int(i*step)
             selectedPaths.append(paths[tempIndex])
     else:

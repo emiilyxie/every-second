@@ -1,0 +1,25 @@
+indexes:
+
+- kind: event-snap
+  properties:
+  - name: userID
+  - name: pill_bottle
+    direction: desc
+  - name: timestamp
+    direction: asc
+
+- kind: event-snap
+  properties:
+  - name: userID
+  - name: food
+    direction: desc
+  - name: timestamp
+    direction: asc
+
+- kind: event-snap
+  properties:
+  - name: userID
+  - name: people
+    direction: desc
+  - name: timestamp
+    direction: asc

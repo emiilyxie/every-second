@@ -7,9 +7,7 @@ with picamera.PiCamera() as camera:
     camera.start_preview()
     sleep(1)
 
-    for i, filename in enumerate(camera.capture_continuous('/home/pi/everysecond/upload/{timestamp:%Y%m%d-%H%M%S}.jpg')):
-        if i==10: 
-            break
-        sleep(1)
+    for i, filename in enumerate(camera.capture_continuous('/home/pi/everysecond/upload/{timestamp:%Y%m%d%H%M%S}.jpg')):
+        sleep(2)
     camera.stop_preview()
 
