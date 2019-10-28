@@ -118,13 +118,23 @@ var parseResponse = function(response) {
     var respSect = document.getElementById('response-section');
     respSect.querySelectorAll('*').forEach(n => n.remove());
     var summaryHeading = document.createElement("h1");
-    summaryHeading.innerHTML = capitalize(respJson.eventMode) + ", you saw " + respJson.eventName + " " + respJson.eventCount + " times.";
+    var message = "Here are the last " + respJson.eventCount + " times you've ";
+    if (respJson.eventName == "medicine") {
+        message = message + "taken medicine";
+    }
+    else if (respJson.eventName == "food") {
+        message = message + "had a meal";
+    }
+    else {
+        message = message + "met with people";
+    }
+    summaryHeading.innerHTML = message;
     respSect.append(summaryHeading);
-    for (var i = 0; i < respJson.events.length; i++) {
-        var count = i+1;
+    for (var i = respJson.events.length-1; i >= 0; i--) {
+        var count = respJson.events.length-i;
         var eventHeading = document.createElement('h2');
-        eventHeading.innerHTML += "Event number " + count + ": ";
-        eventHeading.innerHTML += "Started on " + tsToTime(respJson.events[i].eventStart);
+        // eventHeading.innerHTML += "Event number " + count + "<br>";
+        eventHeading.innerHTML += count + ". " + "At time " + tsToTime(respJson.events[i].eventStart);
         respSect.append(eventHeading);
         //console.log("image paths: " + respJson.events[i].imagePaths);
         //console.log("video path: " + respJson.events[i].videopath);
