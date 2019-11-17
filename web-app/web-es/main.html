@@ -4,58 +4,131 @@
     <meta charset="utf-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
     <base href="https://storage.googleapis.com/web.everysecond.live/">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Montserrat:700|Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/esl.css">
-    <title>Every Second</title>
+    <title>EverySecond</title>
   </head>
   <body>
-      <nav class="navbar navbar-light navbar-expand-md bg-warning" style="font-size: 1.2em">
-        <a class="navbar-brand" href="#">EverySecond ICON</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <nav class="navbar navbar-light navbar-expand-sm navbar-fixed-top" style="font-size: 2em; background-color: rgba(255,255,255,0.5); font-family: 'Montserrat', sans-serif">
+        <a href="http://web.everysecond.live/main.html"><img src="media/half-size-logo.png" width="60px"></img></a>
+        <div id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="function.html">Home </a>
-            <a class="nav-item nav-link active" href="main.html">Example</span></a>
-            <a class="nav-item nav-link" href="technology.html">Technology</a>
+            <a class="nav-item nav-link active" href="http://web.everysecond.live/main.html">&nbsp;Home&nbsp;</a>
+            <a class="nav-item nav-link" href="http://web.everysecond.live/example.html">&nbsp;Example&nbsp;</a>
+            <a class="nav-item nav-link" href="http://web.everysecond.live/tech.html">&nbsp;Technology&nbsp;</a>
           </div>
         </div>
       </nav>
 
-      <div class="jumbotron text-center">
-          <h1>Welcome to EverySecond</h1>
-          <p><a href="media/marketing-video.mp4" target="_blank">See How it Works</a></p>
-          <p>Click any of the buttons below to see the last recorded instance.</p>
+      <div class="slide-main slide-1 container-fluid">
+          <h1>EverySecond</h1>
+          <p>A digital short-term memory for the elderly</p>
       </div>
-      <div class="container">
-          <div class="row select-items">
-              <div class="col-md-4 text-center select-item">
-                  <a id="pill-bottle-button">
-                      <i class="fas fa-pills fa-5x"></i>
-                      <br/>Medicine
-                  </a>
+
+    <div class="slide-sect slide-5 container-fluid">
+        <div class="row">
+            <div class="col-md">
+                <a href="media/marketing-video.mp4" target="_blank" class="box-button">WATCH THE VIDEO</a>
+            </div>
+            <div class="col-md">
+                <a href="http://web.everysecond.live/example.html" class="box-button">VIEW THE EXAMPLE</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-sect slide-4 container-fluid">
+        <h1>The Problem</h1>
+        <div>
+            <div class="list-sect">
+                <div class="row">
+                    <p class="column-header col"><b>01</b></p>
+                    <p class="column-text col-8 text-left">With aging comes short-term memory loss. In normal cases, memory
+                        loss causes problems such as misplacing objects, forgetting important dates, and forgetting
+                        important habits. <br><br></p>
+                </div>
+                <div class="row">
+                    <p class="column-header col"><b>02</b></p>
+                    <p class="column-text col-8 text-left">On a more severe scale, seniors with memory-related conditions
+                        (such as Alzheimer’s) struggle with remembering close relatives, taking medicines at the
+                        correct time, eating healthy meals regularly, or even instances of elder abuse. <br><br></p>
+                </div>
+                <div class="row">
+                    <p class="column-header col"><b>03</b></p>
+                    <p class="column-text col-8 text-left">Many family members who live far away from their elderly relatives
+                        wish to check on the well-being of their relatives and ensure their physical and mental safety. <br></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <div class="slide-sect slide-2 container-fluid">
+          <h1>The Solution</h1>
+          <small class="column-text">EverySecond solves the problems by quickly retrieving "memories" for the elderly
+              and their loved ones. To do this, EverySecond has three key features: it sees what the user sees, understands
+              the images by using artificial intelligence, and recalls daily experiences by indexing these experiences into a datastore.</small>
+          <div class="row">
+              <div class="col-md">
+                  <i class="fas fa-camera column-icon"></i>
+                  <p class="column-header">Device</p>
+                  <p class="column-text">First, EverySecond records what everything that the user sees. The device is
+                      wearable, so it captures data at any time and any place, just like the user’s eye. Each second,
+                      the device takes a picture, not missing a single moment.</p>
               </div>
-              <div class="col-md-4 text-center select-item">
-                  <a id="food-button">
-                      <i class="fas fa-utensils fa-5x"></i>
-                      <br/>Food
-                  </a>
+              <div class="col-md">
+                  <i class="fas fa-cloud-upload-alt column-icon"></i>
+                  <p class="column-header">Cloud</p>
+                  <p class="column-text">Secondly, EverySecond understands what the user sees. Incorporating AI from
+                      the Google Cloud Platform, EverySecond interprets the objects it records. It defines medicine,
+                      people, and food, which are the key components required to help an elderly with his or her
+                      accommodations. Then, a cloud function stores these memories inside a datastore so that EverySecond
+                      quickly responds to a request for a specific memory.</p>
               </div>
-              <div class="col-md-4 text-center select-item">
-                  <a id="people-button">
-                      <i class="fas fa-users fa-5x"></i>
-                      <br/>People
-                  </a>
+              <div class="col-md">
+                  <i class="fas fa-desktop column-icon"></i>
+                  <p class="column-header">Web App</p>
+                  <p class="column-text">Finally, EverySecond recalls previous memories. The innovative image processing
+                      and indexing technique adds a layer of important data to the video and allows users to quickly
+                      find actions or objects witnessed in the video. Users access their digital memory through
+                      a friendly web app interface, which displays a carousel of relevant images for the user to easily
+                      verify the occurrences of an event and reduce false positives.</p>
               </div>
           </div>
       </div>
-
-      <div id="response-section">
+      <!--
+      <div class="slide-sect slide-3 container-fluid">
+          <p>In a Nutshell...</p>
+          <div class="row list-sect">
+              <p class="col column-text-3">EverySecond provides <u>short term memory assistance</u> for elderly users by tracking the user’s  daily activities by visually recording the user’s medication consumption, food intake, and interactions with people. </p>
+              <p class="col column-text-3">Additionally, EverySecond allows the senior's caregivers and family members to <u>remotely check up on the senior</u> and <u>ensure the senior's safety and wellbeing.</u></p>
+          </div>
       </div>
+
+      <div class="slide-sect slide-4 container-fluid">
+          <p>3<br>How It Works</p>
+          <div>
+              <img src="media/easydiagram.png" width="100%" style="max-width: 720px; padding: 60px;"></img>
+              <div class="list-sect">
+                  <div class="row">
+                      <p class="column-header col"><b>LABELLING</b></p>
+                      <p class="column-text col-8">As soon as images taken by the device are uploaded online, a pre-trained object detection model processes the images to add labels.<br><br></p>
+                  </div>
+                  <div class="row">
+                      <p class="column-header col"><b>SORTING</b></p>
+                      <p class="column-text col-8">Labelled images easily are sorted into a Google Cloud Datastore. Once sorted, these images can be quickly searched for.<br><br></p>
+                  </div>
+                  <div class="row">
+                      <p class="column-header col"><b>QUERYING</b></p>
+                      <p class="column-text col-8">The user sends in a request to view the last instance of a specific event (for example, taking medication). Since all of the data is neatly stored, the web app quickly retrieves the images and presents them to the user.<br></p>
+                  </div>
+              </div>
+              </div>
+          </div>
+      -->
 
       <script type="text/javascript" src="js/esl.js"></script>
   </body>

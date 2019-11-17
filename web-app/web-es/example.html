@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <base href="https://storage.googleapis.com/web.everysecond.live/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Montserrat:700|Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/esl.css">
+    <title>Every Second</title>
+  </head>
+  <body>
+      <nav class="navbar navbar-light navbar-expand-sm navbar-fixed-top" style="font-size: 2em; background-color: rgba(255,255,255,0.5); font-family: 'Montserrat', sans-serif">
+        <a href="http://web.everysecond.live/main.html"><img src="media/half-size-logo.png" width="60px"></img></a>
+        <div id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="http://web.everysecond.live/main.html">&nbsp;Home&nbsp;</a>
+            <a class="nav-item nav-link active" href="http://web.everysecond.live/example.html">&nbsp;Example&nbsp;</a>
+            <a class="nav-item nav-link" href="http://web.everysecond.live/tech.html">&nbsp;Technology&nbsp;</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="ex-slide-1 sunset-bg text-center">
+          <h1>Welcome back, [User]</h1>
+          <p>Click any of the buttons below to see the latest recorded events.<br>
+          This page is an example of a user's account.</p>
+      </div>
+
+      <div class="container-fluid">
+          <div class="row select-items">
+              <div class="col-md-4 text-center select-item">
+                  <a id="pill-bottle-button">
+                      <i class="fas fa-pills fa-5x"></i>
+                      <br/>Medicine
+                  </a>
+              </div>
+              <div class="col-md-4 text-center select-item">
+                  <a id="food-button">
+                      <i class="fas fa-utensils fa-5x"></i>
+                      <br/>Food
+                  </a>
+              </div>
+              <div class="col-md-4 text-center select-item">
+                  <a id="people-button">
+                      <i class="fas fa-users fa-5x"></i>
+                      <br/>People
+                  </a>
+              </div>
+          </div>
+      </div>
+
+      <div id="response-section">
+      </div>
+
+      <script type="text/javascript" src="js/esl.js"></script>
+  </body>
+
+</html>

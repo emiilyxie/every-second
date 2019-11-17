@@ -146,6 +146,8 @@ var parseResponse = function(response) {
         respSect.append(vidLink);
         **/
     }
+    respSect.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+
 }
 
 var capitalize = function(s) {
