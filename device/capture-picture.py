@@ -1,4 +1,5 @@
 # record one picture per second, for 100 pictures
+# for training the object detection model
 from time import sleep
 import picamera
 
@@ -10,4 +11,3 @@ with picamera.PiCamera() as camera:
     for i, filename in enumerate(camera.capture_continuous('/home/pi/everysecond/upload/{timestamp:%Y%m%d%H%M%S}.jpg')):
         sleep(2)
     camera.stop_preview()
-
