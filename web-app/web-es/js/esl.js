@@ -1,54 +1,40 @@
-/**
-$("#pill-bottle-button").click(function() {
-    $.post("https://us-central1-united-time-251622.cloudfunctions.net/website-call",
-    {
-        "userID":"customer0001",
-        "pill_bottle":true
-    },
-    function(data, status) {
-        console.log("Data: " + data)
-        console.log("Status: " + status)
-    })
-});
-**/
+// client side javascript file to handle queries and responses for the example page
 
 var STORAGE_BASE = 'https://storage.googleapis.com/';
+var QUERY_ENDPOINT = 'https://us-central1-united-time-251622.cloudfunctions.net/query-function'
 
 $("#pill-bottle-button").click(function() {
-    $.get("https://us-central1-united-time-251622.cloudfunctions.net/query-function?userID=customer0001&pill_bottle=True",
+    $.get(QUERY_ENDPOINT + "?userID=customer0001&pill_bottle=True",
     function(data, status) {
-        console.log("Data: " + data);
-        console.log("Status: " + status);
+        // console.log("Data: " + data);
+        // console.log("Status: " + status);
         parseResponse(data);
     });
 });
 
 $("#food-button").click(function() {
-    $.get("https://us-central1-united-time-251622.cloudfunctions.net/query-function?userID=customer0001&food=True",
+    $.get(QUERY_ENDPOINT + "?userID=customer0001&food=True",
     function(data, status) {
-        console.log("Data: " + data);
-        console.log("Status: " + status);
+        // console.log("Data: " + data);
+        // console.log("Status: " + status);
         parseResponse(data);
     });
 });
 
 $("#people-button").click(function() {
-    $.get("https://us-central1-united-time-251622.cloudfunctions.net/query-function?userID=customer0001&people=True",
+    $.get(QUERY_ENDPOINT + "?userID=customer0001&people=True",
     function(data, status) {
-        console.log("Data: " + data);
-        console.log("Status: " + status);
+        // console.log("Data: " + data);
+        // console.log("Status: " + status);
         parseResponse(data);
     });
 });
 
+// creates an HTML carousel object with the images from the function
 var displayImgs = function(data,number) {
 
-    //console.log(data, number);
-
     var respSect = document.getElementById('response-section');
-    //document.getElementById('img-section').querySelectorAll('*').forEach(n => n.remove());
     var count = 0;
-
     var sectionId = "myCarousel" + count + number;
 
     let paths = data;
@@ -96,7 +82,7 @@ var displayImgs = function(data,number) {
         if (count == 0){
             indicator.setAttribute("class", "active");
         }
-        console.log('indicator');
+        // console.log('indicator');
         document.getElementById(sectionId + "-indicators").append(indicator);
 
         var img = document.createElement('img');
@@ -133,18 +119,12 @@ var parseResponse = function(response) {
     for (var i = respJson.events.length-1; i >= 0; i--) {
         var count = respJson.events.length-i;
         var eventHeading = document.createElement('h2');
-        // eventHeading.innerHTML += "Event number " + count + "<br>";
         eventHeading.innerHTML += count + ". " + "At time " + tsToTime(respJson.events[i].eventStart);
         respSect.append(eventHeading);
-        //console.log("image paths: " + respJson.events[i].imagePaths);
-        //console.log("video path: " + respJson.events[i].videopath);
+        // console.log("image paths: " + respJson.events[i].imagePaths);
+        // console.log("video path: " + respJson.events[i].videopath);
         let imgs = respJson.events[i].imagePaths;
         displayImgs(imgs,i);
-        /**
-        var vidLink = document.createElement('p');
-        vidLink.innerHTML = "Video Link: " + respJson.events[i].videopath;
-        respSect.append(vidLink);
-        **/
     }
     respSect.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
 
@@ -169,6 +149,7 @@ var parseEvent = function(ev) {
     respSect.innerHTML += "Started: " + ev.eventStart;
 }
 
+// for local testing purposes
 var esTestJson =
 {
 	"eventCount": 2,

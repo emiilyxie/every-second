@@ -18,71 +18,68 @@
         <a href="http://web.everysecond.live/main.html"><img src="media/half-size-logo.png" width="60px"></img></a>
         <div id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="http://web.everysecond.live/main.html">&nbsp;Home&nbsp;</a>
+            <a class="nav-item nav-link" href="http://web.everysecond.live/main.html">&nbsp;Home&nbsp;</a>
             <a class="nav-item nav-link" href="http://web.everysecond.live/example.html">&nbsp;Example&nbsp;</a>
-            <a class="nav-item nav-link" href="http://web.everysecond.live/tech.html">&nbsp;Technology&nbsp;</a>
+            <a class="nav-item nav-link active" href="http://web.everysecond.live/tech.html">&nbsp;Technology&nbsp;</a>
           </div>
         </div>
       </nav>
 
       <div class="ex-slide-1 slide-3 container-fluid">
-          <h1>Technology and Q&A</h1>
+          <h1>Technology</h1>
+          <p>A Google Cloud based application.<br>AutoML, Cloud Storage, Datastore, and Cloud Functions.</p>
       </div>
 
       <div class="slide-sect slide-4 container-fluid">
-          <h1>The Architecture</h1>
+          <h1>System Architecture</h1>
           <div>
-              <img src="media/architecture.jpg" width="100%" style="max-width: 720px; padding: 60px;"></img>
-            </div>
+              <img src="media/architecture.jpg" width="100%" style="max-width: 720px; padding: 20px 0px 40px 0px;"></img>
+          </div>
+          <p class="column-text">This runtime architecture displays the two ongoing processes in the EverySecond system. On one end,
+          the recording device and cloud function feed images and data into the Event Index; on the other end, cloud functions process
+          requests from the web app to filter through the Event Index and return the requested event images.</p>
         </div>
 
         <div class="list-sect slide-6 slide-sect">
             <p class="column-header"><b>Training</b></p>
             <img src="media/training.jpg" style="max-width: 480px; padding: 0px 0px 30px; 0px"></img>
-            <p class="column-text text-left" style="margin: 0px 100px;">EverySecond uses a personalized object detection model. The model
-                was trained from Google's AutoML system. For data collection, the development team powered a RaspberryPi
+            <p class="column-text text-left" style="margin: 0px 100px;">EverySecond uses a customized object detection model. The model
+                was trained using Google's AutoML system. For data collection, the development team powered a RaspberryPi
                 camera and captured timelapse images of daily events. Then, the team meticulously drew bounding boxes
                 around medicine bottles, plates, and faces over the thousands of images. The model took approximately one
-                day to finish training. It was very easy to implement in a cloud function, requiring only a model ID number.<br><br></p>
-            <p class="column-header"><b>Cloud Functions</b></p>
+                day to finish training.<br><br><br></p>
+            <p class="column-header"><b>Image Uploading and Processing</b></p>
             <img src="media/cloud-processing.jpg" style="max-width: 480px; padding: 0px 0px 30px; 0px"></img>
-            <p class="column-text text-left" style="margin: 0px 100px;">The Google Cloud Function reacts to the incoming photos uploaded by the
+            <p class="column-text text-left" style="margin: 0px 100px;">A Google Cloud Function reacts to the incoming photos uploaded by the
                 RaspberryPi device. When an image lands in a bucket, the arrival triggers a cloud function, which takes
                 the image and puts the image through the object detection model. The model returns the present labels on
                 the image. Having the image and the image's data (labels, timestamp, path, etc.), the cloud function inputs
-                the data into the Google Cloud Datastore.<br><br></p>
+                the data into the Google Cloud Datastore.<br><br><br></p>
             <p class="column-header col"><b>Request and Response</b></p>
             <img src="media/recall.jpg" style="max-width: 480px; padding: 0px 0px 30px; 0px;"></img>
-            <p class="column-text text-left" style="margin: 0px 100px;">The user clicks on the web app button to view the last instance of a specific event (for example, taking medication). This action prompts the web app to send a GET request to the datastore with certain filters on the wanted labels and time range. The datastore picks out the images with the required data, but it doesn't have the physical image. Instead, it provides the image path: the image is stored in a Google Storage Bucket. Thus, the web app receives all the data about the image and formats it to display the images in a carousel.<br></p>
+            <p class="column-text text-left" style="margin: 0px 100px;">The user clicks on the web app button to view the last instance of a specific
+                event (for example, taking medication). This action prompts the web app to send a GET request to the datastore with certain filters
+                on the wanted labels and time range. The datastore picks out the images with the required data, but it doesn't have the physical
+                image. Instead, it provides the image path: the image is stored in a Google Storage Bucket. Then, the web app receives all the data
+                about the image and formats it to display the images in a carousel.<br><br></p>
         </div>
 
         <div class="slide-sect slide-7 text-left">
-            <h1 class="column-header text-center">Q&A</h1>
-            <p class="column-text"><i>What inspired you to create this app?</i></p>
-            <p class="column-text">My inspiration for this app stems from my family friend's situation and my curiosity for new
-                technologies in the area of artificial intelligence and machine learning.<br><br>My family friend’s mother currently
-                experiences Alzheimer’s disease, so I’ve heard about my friend’s struggles in caring for his mother. He lives apart from
-                her, but he noted that he occasionally needs to keep an eye on his mother’s medicine consumption, food intake, and
-                possible instances of elder abuse. To him, knowing these three aspects would provide him peace of mind. Currently,
-                he facetimes his mother every evening to ask about her day, but his conversations often lead nowhere because of his
-                mother’s condition. My friend’s story inspired me to create an app that could ease his concerns, and his three specific
-                areas of focus led me to add in the three objects to detect.<br><br>Furthermore, throughout my whole childhood,
-                I was genuinely interested in technology, building small projects here and there and creating my website. When
-                I first heard about machine learning, the concept seemed almost magical to me because it seemed like the computer
-                itself could write its code and analyze data. I immediately knew I wanted to create a project with an element of
-                machine learning.<br><br>Faced with a problem and eager to try out a novel technology, I set out to create EverySecond.
-                EverySecond addresses and solves the concerns many people have with their older relatives. This app was an opportunity
-                for me to foster my interest in computer science and create a technology that could benefit others.<br><br></p>
-            <p class="column-text"><i>What technical difficulties did you face?</i></p>
-            <p class="column-text">The first technical difficulty involved not the actual code of the project but what devices and
-                platforms to even code on. When I started my project, I knew that I needed a small camera device. I first tested the
-                Google Clips Camera, which automatically takes pictures and saves the most interesting ones into a phone to create a
-                “highlight of the day.” However, I couldn’t alter the code inside the camera since it was a consumer product, and other
-                wearable cameras had the same issue. I finally chose the Raspberry Pi Zero.  The Pi Zero has a camera attachment and
-                easily carried out my programmed tasks.<br><br>Next, I needed to find a platform that could accept and process the photos
-                from the Raspberry Pi. I considered using a container, but the container required a computer server to run continuously
-                and was also too complex for me to learn in a few months. My solution was the Google Cloud Console, which provided APIs
-                 with detailed documentation. Google’s Cloud Functions allowed my project to operate serverless.</p>
+            <h1 class="column-header text-center">Quick Q&A!</h1>
+            <p class="column-text"><i>Why is EverySecond limited to these three events? Can EverySecond track more events?</i></p>
+            <p class="column-text">Through research and connections, We've learned that the most common issues with Alzheimer's
+                patients involve monitoring the patient's medication, food, and interactions with people.<br>EverySecond, with
+                the necessary training, can track all objects and events. We'd just need to gather enough image data and gather
+                enough people to label bounding boxes, or we can employ existing object detection models.<br><br></p>
+            <p class="column-text"><i>Why the RaspberyPi device? Aren't there more powerful devices with impressive GPUs?</i></p>
+            <p class="column-text">The RaspberryPi is a convenient, small device that easily uploads images online. Although
+                devices by NVIDIA are more powerful with their GPUs, they are bulkier and cost lots of battery power. However,
+                if edge devices become smaller and more power efficient, I will definitely consider using them instead because
+                they will process the image on-device rather than in the cloud, which reduces the inference cost.<br><br></p>
+            <p class="column-text"><i>What if the user doesn't want to wear the RaspberryPi device? Can the user still use EverySecond?</i></p>
+            <p class="column-text">Yes! The user can position the RaspberryPi in a stationary location (for example, at the counter
+                where the user takes medicine) and keep track of image data. Additionally, the user may even use his/her own
+                recording device to upload photos into the Google Bucket, where the Cloud Functions will still process them.<br><br></p>
         </div>
       <script type="text/javascript" src="js/esl.js"></script>
   </body>
